@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -35,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public PageableObject<Employee> getList(String search, int total) {
-        Pageable pageable = PageRequest.of(total, 5);
+        Pageable pageable = PageRequest.of(total, 10);
         Page page = repository.findByMaContainsOrTenContainsOrderById(search, search, pageable);
         return new PageableObject<>(page);
     }
@@ -71,5 +73,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Employee findById(Long id) {
+        return repository.findById(id).get();
     }
 }

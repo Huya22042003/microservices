@@ -1,6 +1,7 @@
 package com.example.project_service.service.impl;
 
 import com.example.project_service.entity.Project;
+import com.example.project_service.model.response.PageableObject;
 import com.example.project_service.repository.ProjectRepository;
 import com.example.project_service.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository repository;
 
     @Override
-    public Page<Project> getAll(String search, int page) {
+    public PageableObject<Project> getAll(String search, int page) {
         Pageable pageable = PageRequest.of(page, 10);
-        return repository.findAllByMaContainsOrTenContains(search, search, pageable);
+        return new PageableObject<>(repository.findAllByMaContainsOrTenContains(search, search, pageable));
     }
 
     @Override
@@ -41,6 +42,11 @@ public class ProjectServiceImpl implements ProjectService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Project findById(Long id) {
+        return repository.findById(id).get();
     }
 
 //    @Bean

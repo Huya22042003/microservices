@@ -4,6 +4,7 @@ import com.example.project_service.entity.Project;
 import com.example.project_service.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/project")
+//@CrossOrigin(origins = "*")
 public class ProjectController {
 
     @Autowired
@@ -41,6 +43,16 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteProject(@PathVariable(name = "id") Long id) {
         return ResponseEntity.ok().body(service.deleteProject(id));
+    }
+
+    @GetMapping("/{id}")
+    public Project getOne(@PathVariable(name = "id") Long id) {
+        return service.findById(id);
+    }
+
+    @GetMapping("/test")
+    public String hehe() {
+        return "Tooi thanh cong r";
     }
 
 }
